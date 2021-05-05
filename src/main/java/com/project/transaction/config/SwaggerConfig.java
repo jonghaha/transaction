@@ -1,5 +1,7 @@
 package com.project.transaction.config;
 
+import java.time.LocalDate;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,9 +22,10 @@ public class SwaggerConfig {
 		return new Docket(DocumentationType.SWAGGER_2)
 			.apiInfo(apiInfo())
 			.select()
-			.apis(RequestHandlerSelectors.basePackage("com.project.transaction"))
+			.apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
 			.paths(PathSelectors.any())
-			.build();
+			.build()
+			.directModelSubstitute(LocalDate.class, String.class);
 	}
 
 	private ApiInfo apiInfo() {
