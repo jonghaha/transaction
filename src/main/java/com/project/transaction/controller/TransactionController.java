@@ -9,12 +9,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.transaction.dto.TransactionDto;
+import com.project.transaction.entity.Transaction;
+import com.project.transaction.repository.TransactionRepository;
 
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/transaction")
 public class TransactionController {
+	private final TransactionRepository transactionRepository;
 
 	/**
 	 * 2018, 2019년 각 연도별 합계 금액이 가장 많은 고객을 추출
@@ -22,8 +27,8 @@ public class TransactionController {
 	 * */
 	@ApiOperation(value = "연도별 합계 금액이 가장 많은 고객 요청", notes = "2018, 2019년 각 연도별 합계 금액이 가장 많은 고객 요청")
 	@GetMapping(value = "/getTotalAmountList")
-	public @ResponseBody List<TransactionDto> getLargeTotalAmountCustomerYearly() {
-		return null;
+	public @ResponseBody List<Transaction> getLargeTotalAmountCustomerYearly() {
+		return transactionRepository.findAll();
 	}
 
 	/**
