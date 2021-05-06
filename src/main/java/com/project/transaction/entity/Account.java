@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Account {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long accountSeq;
 	private Integer accountNumber;
 	private String accountName;
