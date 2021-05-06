@@ -1,6 +1,6 @@
 -- 거래내역
 INSERT INTO TRANSACTION
-(transaction_date, account_number, transaction_number, amount, fee, cancel_flag)
+(tx_date, acct_no, tx_no, amt, fee, cancel_flag)
 VALUES
 ('20180102',11111111,1,1000000,0,'N'),
 ('20180203',11111111,1,500000,1000,'Y'),
@@ -107,7 +107,7 @@ VALUES
 
 -- 거래내역
 INSERT INTO ACCOUNT
-(account_number, account_name, branch_code)
+(acct_no, name, br_code)
 VALUES
 (11111111,'제이','A'),
 (11111112,'에이스','A'),
@@ -123,7 +123,7 @@ VALUES
 
 -- 관리점 정보
 INSERT INTO BRANCH
-(branch_code, branch_name)
+(br_code, br_name)
 VALUES
 ('A','판교점'),
 ('B','분당점'),

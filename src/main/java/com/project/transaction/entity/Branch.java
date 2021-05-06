@@ -17,6 +17,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Branch {
 	@Id
-	private String branchCode;
-	private String branchName;
+	private String brCode;
+	private String brName;
 }

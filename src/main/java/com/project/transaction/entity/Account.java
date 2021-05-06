@@ -20,8 +20,8 @@ import lombok.NoArgsConstructor;
 public class Account {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long accountSeq;
-	private Integer accountNumber;
-	private String accountName;
-	private String branchCode;
+	private Long acctSeq;
+	private Integer acctNo;
+	private String name;
+	private String brCode;
 }

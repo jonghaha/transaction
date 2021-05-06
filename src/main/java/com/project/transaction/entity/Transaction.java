@@ -22,12 +22,11 @@ import lombok.NoArgsConstructor;
 public class Transaction {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long transactionSeq;
-
-	private LocalDate transactionDate;
-	private Integer accountNumber;
-	private Integer transactionNumber;
-	private Integer amount;
+	private Long txSeq;
+	private LocalDate txDate;
+	private Integer acctNo;
+	private Integer txNo;
+	private Integer amt;
 	private Integer fee;
 	private boolean cancelFlag;
 }
