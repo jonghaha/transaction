@@ -26,15 +26,25 @@ public class TransactionRepositoryImpl extends QuerydslRepositorySupport impleme
 	@Override
 	public List<TransactionDto> groupByTxDateAndAcctNoSumAmt() {
 		return queryFactory.select(Projections.bean(TransactionDto.class,
-			transactions.txDate.year().stringValue().as("year"),
+			transactions.txDate.year().as("year"),
 			transactions.acctNo,
 			account.name,
 			transactions.amt.subtract(transactions.fee).sum().as("sumAmt")
 			)).from(transactions)
 			.where(transactions.cancelFlag.isFalse())
 			.innerJoin(account).on(transactions.acctNo.eq(account.acctNo))
-			.groupBy(transactions.txDate.year().stringValue(), transactions.acctNo)
-			.orderBy()
+			.groupBy(transactions.txDate.year(), transactions.acctNo)
+			.fetch();
+	}
+
+	@Override
+	public List<TransactionDto> getNoTransactionCustomer(Integer year) {
+		return queryFactory.select(Projections.bean(TransactionDto.class,
+			account.acctNo,
+			account.name
+			)).from(account)
+			.leftJoin(transactions).on(transactions.acctNo.eq(account.acctNo).and(transactions.cancelFlag.isFalse()).and(transactions.txDate.year().eq(year)))
+			.where(transactions.isNull())
 			.fetch();
 	}
 }

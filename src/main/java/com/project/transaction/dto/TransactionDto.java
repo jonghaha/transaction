@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 public class TransactionDto {
 	@ApiModelProperty(example = "2018", notes = "연도")
-	private String year;
+	private Integer year;
 	@ApiModelProperty(example = "제이", notes = "계좌명")
 	private String name;
 	@ApiModelProperty(example = "11111111", notes = "계좌번호")

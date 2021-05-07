@@ -45,7 +45,7 @@ public class TransactionController {
 	@ApiOperation(value = "거래가 없는 고객 요청", notes = "2018년 또는 2019년에 거래가 없는 고객을 추출")
 	@GetMapping(value = "/noTransactionCustomerByYear")
 	public @ResponseBody List<TransactionDto> getNoTransactionCustomerByYear() {
-		return null;
+		return transactionService.getNoTransactionCustomerByYear();
 	}
 
 	/**
