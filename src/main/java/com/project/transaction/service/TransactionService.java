@@ -2,6 +2,7 @@ package com.project.transaction.service;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -50,5 +51,25 @@ public class TransactionService {
 		}
 
 		return transactionDtoList;
+	}
+
+	public List<Map<String, Object>> getTotalAmountByYearByBranch() {
+		List<Map<String, Object>> response = new ArrayList<>();
+		List<TransactionDto> branchList = transactionRepository.getBranchSumByYear();
+		Map<String, Object> branchList2018 = new HashMap<>();
+		Map<String, Object> branchList2019 = new HashMap<>();
+
+		branchList2018.put("year", 2018);
+		branchList2018.put("dataList",
+			branchList.stream().filter(b -> b.getYear() == 2018).collect(Collectors.toList()));
+
+		branchList2019.put("year", 2019);
+		branchList2019.put("dataList",
+			branchList.stream().filter(b -> b.getYear() == 2019).collect(Collectors.toList()));
+
+		response.add(branchList2018);
+		response.add(branchList2019);
+
+		return response;
 	}
 }

@@ -106,4 +106,38 @@ public class TransactionServiceTest {
 		//then
 		assertThat(noCusromerList2019.stream().map(TransactionDto::getAcctNo).collect(Collectors.toList())).contains(11111114, 11111118, 11111121);
 	}
+
+	@Test
+	void 연도별_관리점별_거래금액_합계() {
+		/**
+		 * -- 연도별 관리점별 거래금액 합계
+		 * SELECT YEAR(t.tx_date), b.br_code, b.br_name, SUM(amt - fee) as sumAmt
+		 * FROM TRANSACTIONS t
+		 * JOIN ACCOUNT a ON a.acct_no = t.acct_no
+		 * JOIN BRANCH b ON a.br_code = b.br_code
+		 * WHERE t.cancel_flag = false
+		 * GROUP BY YEAR(t.tx_date), b.br_code, b.br_name
+		 * ORDER BY YEAR(t.tx_date), sumAmt DESC
+		 *
+		 * -- result
+		 * year  brCode  brName     sumAmt
+		 * 2018	  B	     분당점	    38484000
+		 * 2018	  A	     판교점	    20505700
+		 * 2018	  C	     강남점	    20232867
+		 * 2018	  D	     잠실점	    14000000
+		 * 2019	  A	     판교점	    66795100
+		 * 2019	  B	     분당점	    45396700
+		 * 2019	  C	     강남점	    19500000
+		 * 2019	  D	     잠실점	    6000000
+		 * 2020	  E	     을지로점  	1000000
+		 * */
+		//given
+		List<TransactionDto> transactionList = transactionRepository.getBranchSumByYear();
+		//when
+		String brName2018Index3 = transactionList.stream().filter(t -> t.getYear() == 2018).collect(Collectors.toList()).get(3).getBrName();
+		String brName2019Index2 = transactionList.stream().filter(t -> t.getYear() == 2019).collect(Collectors.toList()).get(2).getBrName();
+		//then
+		assertThat(brName2018Index3).isEqualTo("잠실점");
+		assertThat(brName2019Index2).isEqualTo("강남점");
+	}
 }

@@ -1,6 +1,7 @@
 package com.project.transaction.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,8 +57,8 @@ public class TransactionController {
 	 * */
 	@ApiOperation(value = "연도별 관리점별 거래금액 합계 리스트 요청", notes = "연도별 관리점별 거래금액 합계를 구하고 합계금액이 큰 순서로 출력")
 	@GetMapping(value = "/totalAmountByYearByBranch")
-	public @ResponseBody List<TransactionDto> getTotalAmountByYearByBranch() {
-		return null;
+	public @ResponseBody List<Map<String, Object>> getTotalAmountByYearByBranch() {
+		return transactionService.getTotalAmountByYearByBranch();
 	}
 
 	/**
@@ -68,7 +69,7 @@ public class TransactionController {
 	 * @param brCode 관리점코드
 	 * @return TransactionDto
 	 * */
-	@ApiOperation(value = "저점별 거래 합계 요청", notes = "지점명을 입력하면 해당지점의 거래금액 합계를 출력")
+	@ApiOperation(value = "지점별 거래 합계 요청", notes = "지점명을 입력하면 해당지점의 거래금액 합계를 출력")
 	@ApiImplicitParam(name = "brCode", required = true, example = "A", value = "관리점코드\n(BRANCH BR_CODE 컬럼)")
 	@ApiResponses({
 		@ApiResponse(code = 200, message = "OK"),
