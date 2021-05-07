@@ -1,5 +1,5 @@
 -- 거래내역
-INSERT INTO TRANSACTION
+INSERT INTO TRANSACTIONS
 (tx_date, acct_no, tx_no, amt, fee, cancel_flag)
 VALUES
 ('20180102',11111111,1,1000000,0,'N'),
