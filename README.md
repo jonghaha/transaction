@@ -14,6 +14,11 @@
 * Gradle 6.8.3
 * H2 Database
 * QueryDsl
+* JUnit 5
+
+###문제해결방법
+* 연도별, 관리점별을 위해서는 GROUP BY가 필요한데 Spring Data JPA에는 지원해주지 않기 때문에 Querydsl 연동
+* Exception 을 컨트롤러 단에서 감지하고 에러코드와 메시지를 노출시켜주기 위해 @ControllerAdvice, @ExceptionHandler로 커스텀 예외처리 수행
 
 ###빌드 및 실행방법
 1. ./gradlew clean build
