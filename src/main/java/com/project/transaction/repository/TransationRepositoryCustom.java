@@ -8,4 +8,5 @@ public interface TransationRepositoryCustom {
 	List<TransactionDto> groupByTxDateAndAcctNoSumAmt();
 	List<TransactionDto> getNoTransactionCustomer(Integer year);
 	List<TransactionDto> getBranchSumByYear();
+	TransactionDto getSumAmountBranch(String brName);
 }

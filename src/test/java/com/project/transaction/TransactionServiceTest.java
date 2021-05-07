@@ -13,14 +13,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.project.transaction.dto.TransactionDto;
+import com.project.transaction.exception.NotFoundException;
 import com.project.transaction.repository.TransactionRepository;
-
-import io.swagger.models.auth.In;
+import com.project.transaction.service.TransactionService;
 
 @SpringBootTest
 public class TransactionServiceTest {
 	@Autowired
 	private TransactionRepository transactionRepository;
+	@Autowired
+	private TransactionService transactionService;
 
 	@Test
 	void 거래내역_groupBy_연도_계좌번호() {
@@ -139,5 +141,38 @@ public class TransactionServiceTest {
 		//then
 		assertThat(brName2018Index3).isEqualTo("잠실점");
 		assertThat(brName2019Index2).isEqualTo("강남점");
+	}
+
+	@Test
+	void 해당지점_거래금액_합계_exception_테스트() {
+		//given
+		String brName = "분당점";
+		//then
+		assertThatThrownBy(() -> {
+			transactionService.getSumAmountBranch(brName);
+		}).isInstanceOf(NotFoundException.class).hasMessage("br code not found error");
+	}
+
+	@Test
+	void 해당지점_거래금액_합계() {
+		/**
+		 * -- 판교점
+		 * SELECT b.br_code, b.br_name, SUM(amt - fee) as sumAmt
+		 * FROM TRANSACTIONS t
+		 * JOIN ACCOUNT a ON a.acct_no = t.acct_no
+		 * JOIN BRANCH b ON a.br_code = b.br_code
+		 * WHERE t.cancel_flag = false AND b.br_name = '판교점'
+		 * GROUP BY b.br_code, b.br_name
+		 *
+		 * -- result
+		 * brCode brName  sumAmt
+		 * A	  판교점	  87300800
+		 * */
+		//given
+		String brName = "판교점";
+
+		TransactionDto branchSum = transactionService.getSumAmountBranch(brName);
+
+		assertThat(branchSum.getSumAmt()).isEqualTo(87300800);
 	}
 }

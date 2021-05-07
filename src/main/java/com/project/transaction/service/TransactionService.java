@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.project.transaction.dto.TransactionDto;
+import com.project.transaction.exception.NotFoundException;
 import com.project.transaction.repository.TransactionRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -71,5 +72,13 @@ public class TransactionService {
 		response.add(branchList2019);
 
 		return response;
+	}
+
+	public TransactionDto getSumAmountBranch(String brName) {
+		if (brName.equals("분당점")) {
+			throw new NotFoundException("br code not found error");
+		}
+
+		return transactionRepository.getSumAmountBranch(brName);
 	}
 }

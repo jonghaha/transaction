@@ -66,17 +66,17 @@ public class TransactionController {
 	 * 지점명을 입력하면 해당지점의 거래금액 합계를 출력
 	 * (취소여부가 'Y' 거래는 취소된 거래)
 	 *
-	 * @param brCode 관리점코드
+	 * @param brName 관리점코드
 	 * @return TransactionDto
 	 * */
 	@ApiOperation(value = "지점별 거래 합계 요청", notes = "지점명을 입력하면 해당지점의 거래금액 합계를 출력")
-	@ApiImplicitParam(name = "brCode", required = true, example = "A", value = "관리점코드\n(BRANCH BR_CODE 컬럼)")
+	@ApiImplicitParam(name = "brName", required = true, example = "판교점", value = "관리점코드\n(BRANCH BR_NAME 컬럼)")
 	@ApiResponses({
 		@ApiResponse(code = 200, message = "OK"),
 		@ApiResponse(code = 404, message = "br code not found error")
 	})
 	@GetMapping(value = "/sumAmountByBranch")
-	public @ResponseBody List<TransactionDto> getSumAmountByBranch(String brCode) {
-		return null;
+	public @ResponseBody TransactionDto getSumAmountBranch(String brName) {
+		return transactionService.getSumAmountBranch(brName);
 	}
 }

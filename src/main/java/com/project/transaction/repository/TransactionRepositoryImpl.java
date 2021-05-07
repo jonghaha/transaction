@@ -63,4 +63,20 @@ public class TransactionRepositoryImpl extends QuerydslRepositorySupport impleme
 			.orderBy(transactions.txDate.year().asc(), transactions.amt.subtract(transactions.fee).sum().desc())
 			.fetch();
 	}
+
+	@Override
+	public TransactionDto getSumAmountBranch(String brName) {
+		return queryFactory.select(Projections.bean(TransactionDto.class,
+			branch.brName,
+			branch.brCode,
+			transactions.amt.subtract(transactions.fee).sum().as("sumAmt")
+			)).from(transactions)
+			.join(account).on(transactions.acctNo.eq(account.acctNo))
+			.join(branch).on(account.brCode.eq(branch.brCode))
+			.where(
+				transactions.cancelFlag.isFalse(),
+				branch.brName.eq(brName)
+				)
+			.fetchOne();
+	}
 }
