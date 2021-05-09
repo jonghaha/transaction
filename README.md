@@ -24,6 +24,7 @@
 1. ./gradlew clean build
 2. cd build/libs
 3. java -jar transaction-0.0.1-SNAPSHOT.jar
+4. http://localhost:8080/swagger-ui.html 접속
 
 ###기본 제약사항
 * API 기능명세서에서 기술된 API를 모두 개발하세요.
